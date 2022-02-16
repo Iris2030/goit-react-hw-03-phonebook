@@ -35,32 +35,37 @@ contacts : [ ...contacts, contactItem]
  
   };
 
+
   changeFilter = (event) => {
 this.setState({filter: event.currentTarget.value})
-  }
+  };
+
 
   getFilteredContacts = () => {
 return this.state.contacts.filter(contact => contact.name.toLowerCase().includes(this.state.filter.toLowerCase()))
-  }
+  };
+
 
   deleteContact = (contactId) =>{
     this.setState(({contacts}) => ({
       contacts: contacts.filter(contact =>contact.id !== contactId)
     }))
-  }
+  };
+
 
   componentDidMount(){
-this.setState({
-contacts:JSON.parse(localStorage.getItem('contacts')) 
+this.setState(prev => ({
+contacts:JSON.parse(localStorage.getItem('contacts')) ?? prev.contacts
 
-})
-  }
+}))
+  };
+
  
   componentDidUpdate(prevProps, {contacts}){
 if(this.state.contacts !== contacts){
   localStorage.setItem('contacts',JSON.stringify(this.state.contacts));
 }
-  }
+  };
  
 
   render() {
